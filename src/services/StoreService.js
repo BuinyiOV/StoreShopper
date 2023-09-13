@@ -4,18 +4,29 @@ const useStore = () => {
 	const {request, clearError, process, setProcess} = useHttp();
 
 	const _apiBase = 'https://dummyjson.com';
-	const _apiProducts = '/users';
+	const _apiProducts = '/products';
 	const _apiCategories = '/categories';
+	const _apiCategory = '/category';
 	const _apiUsers = '/users';
 	const _apiPosts = '/posts';
 
 	const getAllProducts = async () => {
-		const res = await request(`${_apiBase}${_apiProducts}?limit=100`);
+		const res = await request(`${_apiBase}${_apiProducts}?limit=12`);
+		return res
+	}
+
+	const getSingleProduct = async (id) => {
+		const res = await request(`${_apiBase}${_apiProducts}/${id}`);
 		return res
 	}
 
 	const getAllCategories = async () => {
 		const res = await request(`${_apiBase}${_apiProducts}${_apiCategories}`);
+		return res
+	}
+
+	const getProductsOfCategory = async (selectedCategory) => {
+		const res = await request(`${_apiBase}${_apiProducts}${_apiCategory}/${selectedCategory}`);
 		return res
 	}
 
@@ -33,8 +44,10 @@ const useStore = () => {
 		clearError,
 		process,
 		setProcess, 
-		getAllProducts, 
+		getAllProducts,
+		getSingleProduct,
 		getAllCategories,
+		getProductsOfCategory,
 		getAllUsers,
 		getAllPosts
 	}

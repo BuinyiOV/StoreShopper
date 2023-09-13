@@ -1,55 +1,64 @@
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import SimpleSlider from '../slider/Slider';
+
 import useStore from '../../services/StoreService';
 
-const MainPage = ({selectedCategory, selectedMain, onSelectedProduct}) => {
+const ProductInfo = ({selectedProduct, status}) => {
 
-	const [productsList, setProductsList] = useState ([])
+	const [product, setProduct] = useState()
+	const [sliderContent, setSliderContent] = useState ()
 
-	const {getAllProducts, getProductsOfCategory} = useStore()
-
-	useEffect(() => {
-		onRequestAllProducts();
-	}, [selectedMain])
+	const {getSingleProduct} = useStore()
 
 	useEffect(() => {
-		onRequestProductsByCategory();
-	}, [selectedCategory])
+		createSliderContent();
+	}, [selectedProduct])
 
+	useEffect(() => {
+		onRequestSingleProduct();
+	}, [sliderContent])
 
-
-
-	const onRequestAllProducts = () => {
-		formList(getAllProducts)
-	}
-
-	const onRequestProductsByCategory = () => {
-		formList(getProductsOfCategory, selectedCategory)
-	}
-
-	const formList = (request, category) => {
-		let productsArr = []
-		request(category)
-		.then((data) =>{
-			data.products.forEach((e)=>{
-						const elemArr = [
-							<div className="main__item" key={uuidv4} data-id={e.id}>
-							<img src={e.thumbnail} alt="#" />
-							<div className='title'>{modifyTitle(e.title)}</div>
-							<div className="priceandrate">
-								<div className='price'>{e.price}.00$</div>
-								<div className='rate'>
-									{countRating(e.rating)}
-								</div>
-							</div>
-							<div className="btn btn__buy">Buy</div>
+	const createSliderContent = () => {
+		getSingleProduct(selectedProduct)
+		.then((e) =>{
+				let arr = [];
+				e.images.forEach((img, i) => {
+					let image = [
+						<div key={uuidv4 + i}>
+							<img className="slider__img" src={img} alt="#" />
 						</div>
-						]
-						productsArr = [productsArr, ...elemArr]
-						setProductsList([ ...productsArr])
+					]
+					arr = [...arr, ...image]
+				})
+				setSliderContent(arr)
 			})
-			
+		}
+
+
+	const onRequestSingleProduct = () => {
+		getSingleProduct(selectedProduct)
+		.then((e) =>{
+				let productInfo = [
+					<div key={uuidv4} className="product__container">
+						<div className="close"
+							onClick={status}>✖</div>
+						<div className="brand">{e.brand}</div>
+						<div className="title">{modifyText(e.title)}</div>
+						<div className="slider">
+							<SimpleSlider sliderContent={sliderContent}/>
+						</div>
+						<div className="description">{e.description}</div>
+						<div className="rating">
+							<div className="rating__stars">{countRating(e.rating)}</div>
+							<div className="rating__numbers">Rating: {e.rating}</div>
+						</div>
+						<div className="price">{e.price}.00$</div>
+						<div className="btn__buy">buy</div>
+					</div>
+					]
+			setProduct(productInfo)
 		})
 	}
 
@@ -81,17 +90,16 @@ const MainPage = ({selectedCategory, selectedMain, onSelectedProduct}) => {
 		return coutingStars
 	}
 
-	const modifyTitle = (title) => {
-		let str = 	title[0].toUpperCase() + title.slice(1)
+	const modifyText = (text) => {
+		let str = text[0].toUpperCase() + text.slice(1)
 		return str
 	}
 
 	return (
-		<main className='main'
-			onClick={onSelectedProduct}>
-			{productsList}
-		</main>
+		<section className="product">
+			{product}
+		</section>
 	)
 }
 
-export default MainPage;
+export default ProductInfo;
