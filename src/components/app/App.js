@@ -7,6 +7,8 @@ import Header from '../header/Header';
 import Menu from '../menu/Menu';
 import ProductInfo from '../productInfo/ProductInfo';
 import Filters from '../filters/Filters';
+import Community from '../community/Community';
+import Publications from '../publications/Publications';
 import Basket from '../basket/Basket';
 import MainPage from '../mainPage/MainPage';
 import Footer from '../footer/Footer';
@@ -19,25 +21,12 @@ const App = () => {
 	const [selectedMain, setSelectedMain] = useState (true);
 	const [selectedCategory, setSelectedCategory] = useState (null)
 	const [selectedProduct, setSelectedProduct] = useState (false)
-	const [productInfo, setProductInfo] = useState (null)
 	const [filter, setFilter] = useState (true)
+	const [activeSorting, setActiveSorting] = useState ('')
+	const [search, setSearch] = useState (null)
+	const [community, setCommunity] = useState (true)
+	const [publications, setPublications] = useState (true)
 	const [basket, setBasket] = useState (true)
-
-	useEffect(() => {
-		//onRequest();
-	//onRequest2()
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-
-	// const onRequest = () => {
-	// 	getAllProducts()
-	// 	.then((data) =>(console.log(data)))
-	// }
-
-	// const onRequest2 = () => {
-	// 	getAllCategories()
-	// 	.then((data) =>(console.log(data)))
-	// }
 
 	const onSelectSection = (e) => {
 
@@ -45,22 +34,36 @@ const App = () => {
 			setFilter(!filter)
 		};
 
+		if (e.target.dataset.section === 'Community'){
+			document.body.style.overflow = 'hidden';
+			setCommunity(!community)
+		};
+
+		if (e.target.dataset.section === 'Publications'){
+			document.body.style.overflow = 'hidden';
+			setPublications(!publications)
+		};
+
 		if (e.target.dataset.section === 'Basket'){
 			document.body.style.overflow = 'hidden';
 			setBasket(!basket)
-			
 		};
 	}
 
 	const onMainPage = (e) => {
 		if (e.target.dataset.main) {
-			setSelectedMain(!selectedMain)
+			setSelectedMain(!selectedMain);
+			setActiveSorting('');
+			setSelectedCategory(null)
+			setFilter(true);
 		}
 	}
 
 	const onCategory = (e) => {
+		e.preventDefault();
 		if (e.target.tagName === 'A' || e.target.tagName === 'LI'){
 			setSelectedCategory(e.target.dataset.categoty);
+			setFilter(true);
 		}
 	}
 
@@ -77,7 +80,32 @@ const App = () => {
 	}
 
 	const onFilter = () => {
-		setFilter(true)
+		setFilter(true);
+		setActiveSorting('');
+		setSelectedMain(!selectedMain)
+		setSelectedCategory(null)
+		document.getElementById("searchfield").value = ""
+	}
+
+	const onSorting = (e) => {
+		if (e.target.dataset.sorting){
+			setActiveSorting(e.target.dataset.sorting);
+			document.getElementById("searchfield").value = ""
+		};
+	}
+
+	const onSearching = (value) => {
+		setSearch(value)
+	}
+
+	const onCommunity = () => {
+		setCommunity(true);
+		document.body.style.overflow = ''
+	}
+
+	const onPublications = () => {
+		setPublications(true);
+		document.body.style.overflow = ''
 	}
 
 	const onBasket = () => {
@@ -94,7 +122,13 @@ const App = () => {
 					section={onSelectSection}
 					onCategory={onCategory}/>
 				{filter? null: <Filters
-											status={onFilter}/>}
+											status={onFilter}
+											sorting={onSorting}
+											onChange={onSearching}/>}
+				{community? null:<Community
+											status={onCommunity}/>}
+				{publications? null:<Publications
+											status={onPublications}/>}
 				{basket? null: <Basket
 											status={onBasket}/>}
 				{selectedProduct? <ProductInfo
@@ -104,7 +138,9 @@ const App = () => {
 			<MainPage
 				selectedCategory={selectedCategory}
 				selectedMain={selectedMain}
-				onSelectedProduct={onSelectedProduct}/>
+				onSelectedProduct={onSelectedProduct}
+				activeSorting={activeSorting}
+				search={search}/>
 			<Footer/>
 		</div>
 	)

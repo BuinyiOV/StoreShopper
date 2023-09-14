@@ -1,0 +1,52 @@
+.filters {
+
+	background-color: rgba(1, 0, 3, 1);
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	position: relative;
+	z-index: 40;
+	padding-top: 10px;
+	text-transform: uppercase;
+
+	animation-name: entering;
+	animation-duration: 0.5s;
+	animation-iteration-count: 1;
+
+}
+
+.filters__item {
+	font-size: 0.8rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #ffffff;
+	padding: 0.4rem;
+	border-radius: 25px;
+	margin-bottom: 1rem;
+
+	transition-duration: 0.7s;
+
+	&:hover {
+		box-shadow: 0px 0px 10px #ffffff inset, 0px 0px 10px #ffffff;
+		transition-duration: 0.3s;
+	}
+}
+
+@media (min-width: 1000px) {
+	.filters__item {
+		font-size: 1rem;
+	}
+}
+
+.filters__search {
+	padding: 2px 10px;
+	border-radius: 8px;
+	font-size: 1.1rem;
+}
+
+.filters__text {
+	display: block;
+}

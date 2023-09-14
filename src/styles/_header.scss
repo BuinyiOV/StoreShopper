@@ -1,0 +1,36 @@
+header {
+
+	background-color: rgba(1, 0, 3, 1);
+	height: 10vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	z-index: 50;
+
+
+	animation-name: logoAnimation;
+	animation-duration: 50s;
+	animation-iteration-count: infinite;
+
+}
+
+.shopper {
+	font-size: 8vh;
+	font-family: Impact;
+	letter-spacing: 6px;
+	background: url('../../public/3.jpg');
+	background-position: 0px 50px;
+	background-clip: text;
+	background-size: 15rem;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: #0000;
+	transform: scale(1);
+	transition-duration: 0.8s;
+
+	&:hover {
+		transform: scale(1.1);
+		background-clip: text;
+		background-position: 0px 20px;
+	}
+}

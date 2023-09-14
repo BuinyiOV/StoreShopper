@@ -11,7 +11,7 @@ const useStore = () => {
 	const _apiPosts = '/posts';
 
 	const getAllProducts = async () => {
-		const res = await request(`${_apiBase}${_apiProducts}?limit=12`);
+		const res = await request(`${_apiBase}${_apiProducts}?limit=30`);
 		return res
 	}
 
@@ -27,6 +27,11 @@ const useStore = () => {
 
 	const getProductsOfCategory = async (selectedCategory) => {
 		const res = await request(`${_apiBase}${_apiProducts}${_apiCategory}/${selectedCategory}`);
+		return res
+	}
+
+	const getSearchedProducts = async (text) => {
+		const res = await request(`${_apiBase}${_apiProducts}/search?q=${text}`);
 		return res
 	}
 
@@ -48,6 +53,7 @@ const useStore = () => {
 		getSingleProduct,
 		getAllCategories,
 		getProductsOfCategory,
+		getSearchedProducts,
 		getAllUsers,
 		getAllPosts
 	}

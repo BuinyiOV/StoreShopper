@@ -3,22 +3,29 @@ import { v4 as uuidv4 } from 'uuid';
 
 import useStore from '../../services/StoreService';
 
-const MainPage = ({selectedCategory, selectedMain, onSelectedProduct}) => {
+const MainPage = ({selectedCategory, selectedMain, onSelectedProduct, activeSorting, search}) => {
 
 	const [productsList, setProductsList] = useState ([])
 
-	const {getAllProducts, getProductsOfCategory} = useStore()
+	const {getAllProducts, getProductsOfCategory, getSearchedProducts} = useStore()
 
 	useEffect(() => {
+		if (!selectedCategory) {
 		onRequestAllProducts();
-	}, [selectedMain])
+		}
+	}, [selectedMain, activeSorting])
 
 	useEffect(() => {
-		onRequestProductsByCategory();
-	}, [selectedCategory])
+		if (selectedCategory) {
+			onRequestProductsByCategory();
+		}
+	}, [selectedCategory, activeSorting])
 
-
-
+	useEffect(() => {
+		if (search || search === ''){
+			onRequestSearching();
+		}
+	}, [search])
 
 	const onRequestAllProducts = () => {
 		formList(getAllProducts)
@@ -28,29 +35,76 @@ const MainPage = ({selectedCategory, selectedMain, onSelectedProduct}) => {
 		formList(getProductsOfCategory, selectedCategory)
 	}
 
-	const formList = (request, category) => {
+	const onRequestSearching = () => {
+		formList(getSearchedProducts, search)
+	}
+
+	const compareItemsBy = (a, b) => {
+
+		switch (activeSorting){
+			case 'price increase' :
+				return a.price - b.price;
+			case 'price decreas' :
+				return b.price - a.price;
+			case 'rating increase' :
+				return a.rating - b.rating;
+			case 'rating decreas' :
+				return b.rating - a.rating;
+			case 'sort by name' :
+					if (a.title < b.title){
+						return -1
+					} else if (a.title > b.title) {
+						return 1
+					} else {
+						return 0
+					}
+			case ' ' :
+					return 0;
+			default: 
+		}
+	}
+
+	const formList = (request, variableReqestData) => {
 		let productsArr = []
-		request(category)
+		request(variableReqestData)
 		.then((data) =>{
-			data.products.forEach((e)=>{
-						const elemArr = [
-							<div className="main__item" key={uuidv4} data-id={e.id}>
-							<img src={e.thumbnail} alt="#" />
-							<div className='title'>{modifyTitle(e.title)}</div>
-							<div className="priceandrate">
-								<div className='price'>{e.price}.00$</div>
-								<div className='rate'>
-									{countRating(e.rating)}
-								</div>
-							</div>
-							<div className="btn btn__buy">Buy</div>
-						</div>
-						]
-						productsArr = [productsArr, ...elemArr]
-						setProductsList([ ...productsArr])
-			})
+
+			if (data.products.length){
 			
+				let sortedArr = data.products.sort(compareItemsBy);
+				sortedArr.forEach((e, i)=>{
+							const elemArr = [
+								<div className="main__item" key={uuidv4 + i} data-id={e.id}>
+								<img src={e.thumbnail} alt="#" />
+								<div className='title'>{modifyTitle(e.title)}</div>
+								<div className="priceandrate">
+									<div className='price'>{e.price}.00$</div>
+									<div className='rate'>
+										{countRating(e.rating)}
+									</div>
+								</div>
+								<div className="btn btn__buy">Buy</div>
+							</div>
+							]
+							productsArr = [...productsArr, ...elemArr]
+							setProductsList([ ...productsArr])
+				})
+			} else {
+				const elemArr = [
+					<div className="main__item" key={uuidv4}>
+					<div className='title'>no results</div>
+					<div className="priceandrate">
+						<div className='price'>no matches</div>
+						<div className='rate'>
+							no items
+						</div>
+					</div>
+					<div className="btn btn__buy">Buy</div>
+				</div>]
+				setProductsList([elemArr])
+			}
 		})
+		
 	}
 
 	const countRating = (rating) => {

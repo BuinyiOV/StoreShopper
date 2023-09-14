@@ -11,7 +11,7 @@ const Categoties = ({onCategory}) => {
 	const {getAllCategories} = useStore()
 
 	useEffect(() => {
-		onRequestCategories()
+		onRequestCategories();
 	}, [])
 
 	const onRequestCategories = () => {

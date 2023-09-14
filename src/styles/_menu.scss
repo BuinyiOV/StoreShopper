@@ -1,0 +1,126 @@
+nav {
+	font-size: 0.8rem;
+	background-color: rgba(1, 0, 3, 1);
+	height: auto;
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	position: relative;
+	z-index: 50;
+}
+
+@media (min-width: 315px) {
+	nav {
+		flex-direction: row;
+		flex-wrap: wrap-reverse;
+	}
+}
+
+@media (min-width: 850px) {
+	nav {
+		font-size: 1rem;
+		flex-wrap: nowrap;
+		height: 1.5rem;
+	}
+}
+
+@media (min-width: 1000px) {
+	nav {
+		font-size: 1.5rem;
+		height: 2rem;
+	}
+}
+
+//--------------------------------------------------------
+
+
+.btn {
+	text-transform: uppercase;
+	text-align: center;
+
+	&:hover {
+		.menu__list {
+			transform: translate(0px, 0px) scale(1, 1);
+			transition-timing-function: cubic-bezier(0, 0, 0, 1);
+			max-height: 50vh;
+			overflow: auto;
+		}
+
+
+		.menu__item {
+			background: rgb(255, 255, 255);
+			background-clip: text;
+		}
+	}
+}
+
+.btn__menu {
+	text-transform: uppercase;
+	font-family: Impact;
+	letter-spacing: 6px;
+	background: white;
+	background-position: 0px -50px;
+	background-clip: text;
+	background-size: 100%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: #0000;
+	transition-duration: 0.8s;
+	position: relative;
+	z-index: 10;
+	margin: 0 0.8rem;
+	padding: 1rem 0;
+
+	&:hover {
+		background: url('../../public/3.jpg');
+		background-clip: text;
+	}
+}
+
+@media (min-width: 850px) {
+	.btn__menu {
+		margin: 0.2rem 0.8rem;
+		padding: 0;
+	}
+}
+
+.menu__list {
+	text-transform: capitalize;
+	font-size: 0.8rem;
+	padding: 0.5rem 0;
+	box-shadow: 0px -10px 10px #00000032 inset;
+	border-radius: 0px 0px 25px 25px;
+	background: linear-gradient(90deg, rgba(89, 0, 248, 0) 0%, rgba(0, 0, 0, 0.921) 15%, rgba(0, 0, 0, 0.921) 85%, rgba(89, 0, 248, 0) 100%);
+	position: relative;
+	z-index: 5;
+	max-height: 0.1vh;
+	overflow: auto;
+	transform: translate(0, -100vh) scale(1, 0);
+	transition-duration: 0.8s;
+	transition-timing-function: cubic-bezier(0.5, 0.3, 0, 0.0);
+
+	&::-webkit-scrollbar {
+		width: 0.5rem;
+	}
+
+	&::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: darkgrey;
+		outline: 1px solid slategrey;
+	}
+}
+
+.menu__item {
+	padding: 0.3rem;
+	border-radius: 25px;
+	padding: 0.5rem 0;
+	transition-duration: 0.7s;
+
+	&:hover {
+		box-shadow: 0px 0px 10px #ffffff inset, 0px 0px 10px #ffffff;
+		transition-duration: 0.3s;
+	}
+}
