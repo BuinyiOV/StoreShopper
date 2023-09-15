@@ -12,7 +12,6 @@ header {
 	animation-name: logoAnimation;
 	animation-duration: 50s;
 	animation-iteration-count: infinite;
-
 }
 
 .shopper {
@@ -27,6 +26,11 @@ header {
 	-webkit-text-fill-color: #0000;
 	transform: scale(1);
 	transition-duration: 0.8s;
+
+
+	animation-name: modal;
+	animation-duration: 4s;
+	animation-iteration-count: 1;
 
 	&:hover {
 		transform: scale(1.1);

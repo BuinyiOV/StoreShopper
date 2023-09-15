@@ -15,7 +15,7 @@ const Menu = ({section, onCategory}) => {
 			<section className="btn btn__menu" data-section="Publications"
 				onClick={section}>Publications</section>
 			<section className="btn btn__menu" data-section="Basket"
-				onClick={section}>Basket</section>
+				onClick={section}>Cart</section>
 		</nav>
 	)
 }

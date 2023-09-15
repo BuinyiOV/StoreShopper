@@ -5,7 +5,7 @@ import SimpleSlider from '../slider/Slider';
 
 import useStore from '../../services/StoreService';
 
-const ProductInfo = ({selectedProduct, status}) => {
+const ProductInfo = ({onBuyProduct, selectedProduct, status}) => {
 
 	const [product, setProduct] = useState()
 	const [sliderContent, setSliderContent] = useState ()
@@ -41,7 +41,12 @@ const ProductInfo = ({selectedProduct, status}) => {
 		getSingleProduct(selectedProduct)
 		.then((e) =>{
 				let productInfo = [
-					<div key={uuidv4} className="product__container">
+					<div key={uuidv4} className="product__container"
+											data-id={e.id}
+											data-title={e.title}
+											data-price={e.price}
+											data-rating={e.rating}
+											data-thumbnail={e.thumbnail}>
 						<div className="close"
 							onClick={status}>✖</div>
 						<div className="brand">{e.brand}</div>
@@ -55,7 +60,8 @@ const ProductInfo = ({selectedProduct, status}) => {
 							<div className="rating__numbers">Rating: {e.rating}</div>
 						</div>
 						<div className="price">{e.price}.00$</div>
-						<div className="btn__buy">buy</div>
+						<div className="btn__buy"
+											onClick={onBuyProduct}>buy</div>
 					</div>
 					]
 			setProduct(productInfo)

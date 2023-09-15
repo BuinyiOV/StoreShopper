@@ -1,43 +1,54 @@
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const Basket = ({onClearBasket, status, besketItems, onDeleteFromBasket}) => {
+const BuyProduct = ({buyProduct, status, onBasketItems}) => {
 
-	const [basketContent, setBasketContent] = useState ([])
+	const [detals, setDetals] = useState ([])
+	const [qty, setQty] = useState (0)
+	
 
 	useEffect (()=>{
-		countItemsInBasket(besketItems)
-	}, [besketItems])
+		buyOptions()
+	}, [buyProduct, qty])
 
-	const countItemsInBasket = (data) => {
-		let basketArr = []
-			data.forEach((e, i)=>{
-				let corected = [
-						<div className="basket__item" key={uuidv4 + i}
-						data-title={e.title}>
-							<img className='basket__img' src={e.thumbnail} alt="#" />
-							<div className="basket__content">
-								<div className='basket__title'></div>
-								<div className="basket__priceandrate">
-									<div className='basket__price'>{e.price}.00$</div>
-									<div className='basket__rate'>{countRating(e.rating)}</div>
+
+	const buyOptions = () => {
+					let options = [
+								<div className="basket__container"  key={uuidv4}>
+									<div className="close"
+										onClick={status}>✖</div>
+									<div className="basket__item">
+										<img className='basket__img' src={buyProduct.thumbnail} alt="#" />
+										<div className="basket__content">
+											<div className='basket__title'></div>
+											<div className="basket__priceandrate">
+												<div className='basket__price'>{buyProduct.price}.00$</div>
+												<div className='basket__rate'>{countRating(buyProduct.rating)}</div>
+											</div>
+											<section className="setqty">
+													<div className="btnqty" onClick={onDec}>-</div>
+													<div className="qtyfield">{qty}</div>
+													<div className="btnqty" onClick={onInc}>+</div>
+													<div className="btn__buy basketbuy" onClick={onAddToBasket}>buy</div>
+											</section>
+											
+										</div>
+									</div>
 								</div>
-								<section className="setqty">
-										<div className="qtyfield">{e.amount}</div>
-										<div className="basket__dlt" onClick={onDeleteFromBasket}>✖</div>
-								</section>
-							</div>
-						</div>
-					
-				]
-				basketArr = [...basketArr, ...corected]
-			})
-		
-	setBasketContent([...basketArr])
+						];
+		setDetals(options)
+	}
+
+const onInc = () => {
+	if (qty < 9999) {
+		setQty(qty + 1)
+	}
 }
 
-const co = (e) => {
-	console.log(e.target.closest('.basket__item'))
+const onDec = () => {
+	if (qty > 0) {
+		setQty(qty - 1)
+	}
 }
 
 	const countRating = (rating) => {
@@ -68,18 +79,26 @@ const co = (e) => {
 		return coutingStars
 	}
 
+	const modifyText = (text) => {
+		let str = text[0].toUpperCase() + text.slice(1)
+		return str
+	}
+
+	const onAddToBasket = () => {
+		status()
+		onBasketItems({thumbnail: buyProduct.thumbnail,
+			title:modifyText(buyProduct.title),
+			price: buyProduct.price,
+			rating: buyProduct.rating,
+			amount:qty
+		})
+	}
+
 	return (
 		<section className='basket'>
-			<div className="basket__container">
-				<div className="close"
-					onClick={status}>✖</div>
-				{basketContent}
-				{besketItems.length?
-					<div className="btn__buy basketbuy" onClick={onClearBasket} style={{"width": "95%", "margin": "0 auto"}}>buy</div>:
-					<div className="btn__buy basketbuy" onClick={status} style={{"width": "95%", "margin": "10vh auto"}}>cart is empty...</div>}
-			</div>
+			{detals}
 		</section>
 	)
 }
 
-export default Basket;
+export default BuyProduct;

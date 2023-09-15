@@ -11,7 +11,7 @@ const useStore = () => {
 	const _apiPosts = '/posts';
 
 	const getAllProducts = async () => {
-		const res = await request(`${_apiBase}${_apiProducts}?limit=30`);
+		const res = await request(`${_apiBase}${_apiProducts}?limit=100`);
 		return res
 	}
 

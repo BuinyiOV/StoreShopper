@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import useStore from '../../services/StoreService';
 
-const MainPage = ({selectedCategory, selectedMain, onSelectedProduct, activeSorting, search}) => {
+const MainPage = ({selectedCategory, selectedMain, onSelectedProduct, onBuyProduct, activeSorting, search}) => {
 
 	const [productsList, setProductsList] = useState ([])
 
@@ -74,7 +74,13 @@ const MainPage = ({selectedCategory, selectedMain, onSelectedProduct, activeSort
 				let sortedArr = data.products.sort(compareItemsBy);
 				sortedArr.forEach((e, i)=>{
 							const elemArr = [
-								<div className="main__item" key={uuidv4 + i} data-id={e.id}>
+								<div className="main__item" key={uuidv4 + i}
+										data-id={e.id}
+										data-title={e.title}
+										data-price={e.price}
+										data-rating={e.rating}
+										data-thumbnail={e.thumbnail}
+										>
 								<img src={e.thumbnail} alt="#" />
 								<div className='title'>{modifyTitle(e.title)}</div>
 								<div className="priceandrate">
@@ -83,7 +89,8 @@ const MainPage = ({selectedCategory, selectedMain, onSelectedProduct, activeSort
 										{countRating(e.rating)}
 									</div>
 								</div>
-								<div className="btn btn__buy">Buy</div>
+								<div className="btn btn__buy"
+										onClick={onBuyProduct}>Buy</div>
 							</div>
 							]
 							productsArr = [...productsArr, ...elemArr]
@@ -91,16 +98,8 @@ const MainPage = ({selectedCategory, selectedMain, onSelectedProduct, activeSort
 				})
 			} else {
 				const elemArr = [
-					<div className="main__item" key={uuidv4}>
-					<div className='title'>no results</div>
-					<div className="priceandrate">
-						<div className='price'>no matches</div>
-						<div className='rate'>
-							no items
-						</div>
-					</div>
-					<div className="btn btn__buy">Buy</div>
-				</div>]
+						<div key={uuidv4} className="btn btn__buy nomatches">no matches...</div>
+					]
 				setProductsList([elemArr])
 			}
 		})
@@ -136,7 +135,7 @@ const MainPage = ({selectedCategory, selectedMain, onSelectedProduct, activeSort
 	}
 
 	const modifyTitle = (title) => {
-		let str = 	title[0].toUpperCase() + title.slice(1)
+		let str = 	title[0].toUpperCase() + title.slice(1, 20)
 		return str
 	}
 
