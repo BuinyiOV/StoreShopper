@@ -34,3 +34,32 @@
 		transform: scale(1, 1);
 	}
 }
+
+@keyframes firstload {
+	0% {
+		opacity: 0;
+		transform: scale(2, 0);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1, 1);
+	}
+}
+
+@keyframes footer {
+	0% {
+		opacity: 0;
+		transform: scale(2, 0);
+	}
+
+	90% {
+		opacity: 0;
+		transform: scale(2, 0);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1, 1);
+	}
+}

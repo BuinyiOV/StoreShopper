@@ -8,6 +8,7 @@ nav {
 	flex-wrap: wrap;
 	position: relative;
 	z-index: 50;
+
 }
 
 @media (min-width: 315px) {
@@ -45,6 +46,8 @@ nav {
 			transition-timing-function: cubic-bezier(0, 0, 0, 1);
 			max-height: 50vh;
 			overflow: auto;
+
+			transition-duration: 2s;
 		}
 
 

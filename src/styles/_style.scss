@@ -15,6 +15,7 @@
 @import "_basket.scss";
 @import "_product.scss";
 
+
 .wrapper {
 	min-height: 100vh;
 	overflow: hidden;
@@ -28,7 +29,7 @@
 
 //---------------------------------------------------------
 
-@media (min-width: 686px) {
+@media (min-width: 850px) {
 	.fixed__top {
 		position: fixed;
 		width: 100%;
