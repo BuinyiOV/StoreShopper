@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkstore=self.webpackChunkstore||[]).push([[103],{103:function(e,a,s){s.r(a);var t=s(184);a.default=function(){return(0,t.jsx)("footer",{children:"Shopper is a fake store based on a database of fake products. The application was created by Oleksii Buinyi using React"})}}}]);
+//# sourceMappingURL=103.fd2fc878.chunk.js.map
