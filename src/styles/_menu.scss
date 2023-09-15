@@ -49,25 +49,18 @@ nav {
 
 			transition-duration: 2s;
 		}
-
-
-		.menu__item {
-			background: rgb(255, 255, 255);
-			background-clip: text;
-		}
 	}
 }
 
 .btn__menu {
+	color: white;
 	text-transform: uppercase;
 	font-family: Impact;
 	letter-spacing: 6px;
-	background: white;
+	background: rgba(0, 0, 0, 0);
 	background-position: 0px -50px;
-	background-clip: text;
 	background-size: 100%;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: #0000;
+
 	transition-duration: 0.8s;
 	position: relative;
 	z-index: 10;

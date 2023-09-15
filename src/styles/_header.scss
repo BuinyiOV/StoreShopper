@@ -6,7 +6,7 @@ header {
 	justify-content: center;
 	align-items: center;
 	position: relative;
-	z-index: 50;
+	z-index: 55;
 
 
 	animation-name: logoAnimation;
@@ -29,7 +29,7 @@ header {
 
 
 	animation-name: modal;
-	animation-duration: 4s;
+	animation-duration: 5s;
 	animation-iteration-count: 1;
 
 	&:hover {
